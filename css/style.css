@@ -559,12 +559,18 @@ body:not(.light) .dev-dot {
 
 @media (max-width: 768px) {
   html {
-    font-size: 87%;
+    font-size: 90%;
   }
   .hero-grid {
     flex-direction: column-reverse;
-    padding-left: 0rem;
-    padding-right: 0rem;
+   }
+  .hero-section{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .hero-grid{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   .hero-content-area, .hero-image-area {
     flex: 1;
