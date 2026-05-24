@@ -26,7 +26,7 @@ const educationArr = [
   { period: "Oct, 2023 – Jul, 2024", title: "Professional Training Program(9-Month) | ITI", desc: ".NET Full-Stack Web Development Scholarship." },
   { period: "Jul, 2023 – Oct, 2023", title: "Full-Stack MEARN Track | ITI", desc: "MongoDB, Express, Angular/React, Node.js. Full-stack apps & integration." }
 ];
-document.getElementById('educationList').innerHTML = educationArr.map((edu, idx) => `<div class="p-6 rounded-2xl border-l-2 border-blue-500 transition transform hover:translate-x-1 stagger-item delay-${(idx+1)*100}" style="background: var(--bg-primary);"><p class="text-blue-300 text-sm">${edu.period}</p><h3 class="text-xl font-bold mt-1">${edu.title}</h3><p class="text-gray-400 mt-2">${edu.desc}</p></div>`).join('');
+document.getElementById('educationList').innerHTML = educationArr.map((edu, idx) => `<div class="p-6 rounded-2xl border-l-2 border-blue-500 transition transform hover:translate-x-1 stagger-item delay-${(idx+1)*100}" style="background: var(--bg-primary);"><p class="text-blue-300 text-sm">${edu.period}</p><h3 class="font-bold mt-1">${edu.title}</h3><p class="text-gray-400 mt-2">${edu.desc}</p></div>`).join('');
 
 // ========== PROJECTS DATA ==========
 const projectsList = [
