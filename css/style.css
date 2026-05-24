@@ -37,6 +37,16 @@ body {
   color: var(--text-primary);
 }
 
+py-20{
+  padding-top: 4rem !important;
+  padding-bottom: 4rem !important;
+}
+
+py-16{
+    padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
 /* ========== ENHANCED TRANSITIONS & ANIMATIONS ========== */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(40px); }
@@ -135,7 +145,7 @@ section {
   height: 2px;
   bottom: -4px;
   left: 0;
-  background: linear-gradient(90deg, #60A5FA, #A78BFA);
+  background: linear-gradient(30deg, #8ebdf7, #A78BFA);
   transition: width 0.3s ease;
 }
 
@@ -166,7 +176,7 @@ section {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #60A5FA, #A78BFA, #F472B6);
+  background: linear-gradient(30deg, #60A5FA, #A78BFA, #F472B6);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -183,6 +193,7 @@ section {
 }
 
 .skill-badge {
+  font-size: 0.8rem !important;
   background: var(--skill-bg);
   border: 1px solid var(--skill-border);
   backdrop-filter: blur(4px);
@@ -249,7 +260,7 @@ body.light ::-webkit-scrollbar-thumb {
   z-index: 1000;
   transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem 5rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
@@ -492,7 +503,9 @@ a, button {
   flex: 3;
   min-width: 280px;
 }
-
+.hello-msg{
+  height: 100px !important;
+}
 .hero-image-area {
   flex: 2;
   min-width: 250px;
