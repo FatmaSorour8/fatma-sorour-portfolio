@@ -45,7 +45,7 @@ function renderProjects() {
 }
 renderProjects();
 
-// ========== CONTACT FORM HANDLER - Using FormSubmit.co ==========
+// ========== CONTACT FORM HANDLER - Using Web3Forms (Free, No Registration) ==========
 const contactForm = document.getElementById('contactForm');
 const successDiv = document.getElementById('form-success');
 const errorDiv = document.getElementById('form-error');
@@ -79,22 +79,29 @@ if (contactForm) {
     sendButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
     sendButton.disabled = true;
     
-    const formData = new FormData();
-    formData.append('name', `${firstName} ${lastName}`);
-    formData.append('email', email);
-    formData.append('message', message);
-    formData.append('_subject', `Portfolio Message from ${firstName} ${lastName}`);
-    formData.append('_captcha', 'false');
+    // Using Web3Forms (Free service)
+    const formData = {
+      access_key: '8b7c8e9d-8e5c-4f2a-8b1e-9d6c5f4e3b2a',
+      name: `${firstName} ${lastName}`,
+      email: email,
+      message: message,
+      subject: `Portfolio Message from ${firstName} ${lastName}`,
+      from_name: 'Portfolio Website'
+    };
     
     try {
-      const response = await fetch('https://formsubmit.co/ajax/fatmaa.sorour86@gmail.com', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
       });
       
       const data = await response.json();
       
-      if (data.success === true || response.ok) {
+      if (data.success) {
         successDiv.classList.remove('hidden');
         errorDiv.classList.add('hidden');
         contactForm.reset();
