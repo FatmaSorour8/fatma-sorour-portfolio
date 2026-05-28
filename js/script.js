@@ -45,82 +45,91 @@ function renderProjects() {
 }
 renderProjects();
 
-// ========== CONTACT FORM HANDLER - Using Web3Forms (Free, No Registration) ==========
-const contactForm = document.getElementById('contactForm');
-const successDiv = document.getElementById('form-success');
-const errorDiv = document.getElementById('form-error');
-const sendButton = document.getElementById('sendBtn');
+    
+    // ========== CONTACT FORM HANDLER - Using FormSubmit.co (Free, No Registration) ==========
+    const contactForm = document.getElementById('contactForm');
+    const successDiv = document.getElementById('form-success');
+    const errorDiv = document.getElementById('form-error');
+    const sendButton = document.getElementById('sendBtn');
 
-if (contactForm) {
-  contactForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-    
-    if (!firstName || !lastName || !email || !message) {
-      errorDiv.classList.remove('hidden');
-      successDiv.classList.add('hidden');
-      setTimeout(() => errorDiv.classList.add('hidden'), 3000);
-      return;
-    }
-    
-    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      errorDiv.classList.remove('hidden');
-      successDiv.classList.add('hidden');
-      setTimeout(() => errorDiv.classList.add('hidden'), 3000);
-      return;
-    }
-    
-    const originalText = sendButton.innerHTML;
-    sendButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
-    sendButton.disabled = true;
-    
-    // Using Web3Forms (Free service)
-    const formData = {
-      access_key: '8b7c8e9d-8e5c-4f2a-8b1e-9d6c5f4e3b2a',
-      name: `${firstName} ${lastName}`,
-      email: email,
-      message: message,
-      subject: `Portfolio Message from ${firstName} ${lastName}`,
-      from_name: 'Portfolio Website'
-    };
-    
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(formData)
+    if (contactForm) {
+      contactForm.addEventListener('submit', async function(event) {
+        // PREVENT PAGE RELOAD
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Get form values
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        // Validation
+        if (!firstName || !lastName || !email || !message) {
+          errorDiv.classList.remove('hidden');
+          successDiv.classList.add('hidden');
+          setTimeout(() => errorDiv.classList.add('hidden'), 3000);
+          return;
+        }
+        
+        // Email validation
+        if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+          errorDiv.classList.remove('hidden');
+          successDiv.classList.add('hidden');
+          setTimeout(() => errorDiv.classList.add('hidden'), 3000);
+          return;
+        }
+        
+        // Show loading state
+        const originalText = sendButton.innerHTML;
+        sendButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+        sendButton.disabled = true;
+        
+        // Prepare form data for FormSubmit.co
+        const formData = new FormData();
+        formData.append('name', `${firstName} ${lastName}`);
+        formData.append('email', email);
+        formData.append('message', message);
+        formData.append('_subject', `Portfolio Message from ${firstName} ${lastName}`);
+        formData.append('_captcha', 'false');
+        
+        try {
+          // Send to FormSubmit.co (free service, no registration needed)
+          const response = await fetch('https://formsubmit.co/ajax/fatmaa.sorour86@gmail.com', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const data = await response.json();
+          
+          if (data.success === true || response.ok) {
+            // Show success message
+            successDiv.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => successDiv.classList.add('hidden'), 5000);
+          } else {
+            throw new Error('Form submission failed');
+          }
+        } catch (error) {
+          console.error('Failed to send email:', error);
+          
+          // Show error message
+          errorDiv.classList.remove('hidden');
+          successDiv.classList.add('hidden');
+          
+          setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+        } finally {
+          // Reset button
+          sendButton.innerHTML = originalText;
+          sendButton.disabled = false;
+        }
       });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        successDiv.classList.remove('hidden');
-        errorDiv.classList.add('hidden');
-        contactForm.reset();
-        setTimeout(() => successDiv.classList.add('hidden'), 5000);
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      console.error('Failed to send email:', error);
-      errorDiv.classList.remove('hidden');
-      successDiv.classList.add('hidden');
-      setTimeout(() => errorDiv.classList.add('hidden'), 5000);
-    } finally {
-      sendButton.innerHTML = originalText;
-      sendButton.disabled = false;
     }
-  });
-}
-
 // ========== DARK / LIGHT MODE ==========
 function setTheme(theme) { if(theme === 'light') document.body.classList.add('light'); else document.body.classList.remove('light'); localStorage.setItem('portfolio-theme', theme); updateToggleIcons(theme); }
 function updateToggleIcons(theme) { const isLight = theme === 'light'; const icons = document.querySelectorAll('#desktopThemeToggle i, #sideThemeToggle i'); if(icons.length) icons.forEach(icon => { if(icon.classList) icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon'; }); }
